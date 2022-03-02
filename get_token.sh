@@ -33,6 +33,7 @@ check_tool() {
 # Now we call the function to make sure we can use curl and jq.
 check_tool curl
 check_tool jq
+check_tool tput
 
 # This function creates a timestamp, to use for setting $TOKEN_EXPIRATION
 timeout_timestamp() {
