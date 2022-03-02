@@ -18,6 +18,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+set -o xtrace
 
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
@@ -75,9 +76,9 @@ if [[ -z $WG_SERVER_IP ||
   echo "PIA_PF                - enable port forwarding"
   echo "PAYLOAD_AND_SIGNATURE - In case you already have a port."
   echo
-  echo "An easy solution is to just run get_region_and_token.sh"
-  echo "as it will guide you through getting the best server and"
-  echo "also a token. Detailed information can be found here:"
+  echo "An easy solution is to use run_setup.sh as it will guide"
+  echo "you through getting the best server and also a token."
+  echo "Detailed information can be found here:"
   echo -e "https://github.com/pia-foss/manual-connections${nc}"
   exit 1
 fi
@@ -102,7 +103,7 @@ export pubKey
 echo "Trying to connect to the PIA WireGuard API on $WG_SERVER_IP..."
 wireguard_json="$(curl -s -G \
   --connect-to "$WG_HOSTNAME::$WG_SERVER_IP:" \
-  --cacert "ca.rsa.4096.crt" \
+  --cacert "$DIR/ca.rsa.4096.crt" \
   --data-urlencode "pt=${PIA_TOKEN}" \
   --data-urlencode "pubkey=$pubKey" \
   "https://${WG_HOSTNAME}:1337/addKey" )"
