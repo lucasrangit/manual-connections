@@ -151,6 +151,11 @@ Endpoint = ${WG_SERVER_IP}:$(echo "$wireguard_json" | jq -r '.server_port')
 " > "/etc/wireguard/$WG_INTERFACE.conf" || exit 1
 echo -e "${green}OK!${nc}"
 
+if [[ $AUTOSTART != "true" ]]; then
+  echo "VPN AUTOSTART not set. You can manually start the VPN now."
+  exit 0
+fi
+
 # Start the WireGuard interface.
 # If something failed, stop this script.
 # If you get DNS errors because you miss some packages,
