@@ -22,6 +22,18 @@ set -o xtrace
 
 DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
+# This function allows you to check if the required tools have been installed.
+check_tool() {
+  cmd=$1
+  if ! command -v "$cmd" >/dev/null; then
+    echo "$cmd could not be found"
+    echo "Please install $cmd"
+    exit 1
+  fi
+}
+
+check_tool tput
+
 # Check if terminal allows output, if yes, define colors for output
 if [[ -t 1 ]]; then
   ncolors=$(tput colors)
